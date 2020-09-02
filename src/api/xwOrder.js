@@ -30,11 +30,10 @@ export function edit(data) {
   })
 }
 
-export function downloadXwOrder(params) {
+export function downloadXwOrder(orderId) {
   return request({
-    url: 'api/xwOrder/download',
+    url: 'api/xwOrder/download/' + orderId,
     method: 'get',
-    params,
-    responseType: 'blob'
+    responseType: 'arraybuffer'
   })
 }

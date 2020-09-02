@@ -206,6 +206,7 @@ export default {
           })
           this.loading = false
           this.$parent.init()
+          this.$refs.upload.clearFiles()
         })
         .catch((err) => {
           this.loading = false
@@ -225,6 +226,7 @@ export default {
           })
           this.loading = false
           this.$parent.init()
+          this.$refs.upload.clearFiles()
         })
         .catch((err) => {
           this.loading = false
