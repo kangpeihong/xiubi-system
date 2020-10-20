@@ -68,8 +68,6 @@ export default {
       this.downloadLoading = true
       downloadXwOrder(orderId)
         .then((result) => {
-          console.log('=====' + result.data)
-          //downloadFile(result, '订单详情', 'pdf')
 
           const url = window.URL.createObjectURL(new Blob([result]))
           const link = document.createElement('a')

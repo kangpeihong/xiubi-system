@@ -14,6 +14,7 @@ const getters = {
   baseApi: state => state.api.baseApi,
   fileUploadApi: state => state.api.fileUploadApi,
   xwProductfileUploadApi: state => state.api.xwProductfileUploadApi,
+  xwEmployeesFileUploadApi: state => state.api.xwEmployeesFileUploadApi,
   updateAvatarApi: state => state.api.updateAvatarApi,
   qiNiuUploadApi: state => state.api.qiNiuUploadApi,
   sqlApi: state => state.api.sqlApi,

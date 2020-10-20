@@ -4,7 +4,6 @@ import Config from '@/config'
 const TokenKey = Config.TokenKey
 
 export function getToken() {
-  console.log(Cookies.get(TokenKey))
   return Cookies.get(TokenKey)
 }
 

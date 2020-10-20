@@ -17,9 +17,10 @@ const api = {
     fileUploadApi: baseUrl + '/api/localStorage',
     // 添加产品
     xwProductfileUploadApi: baseUrl + '/api/xwProduct/image',
+    // 添加头像
+    xwEmployeesFileUploadApi: baseUrl + '/api/xwEmployees/image',
     // baseUrl，
     baseApi: baseUrl
-       
   }
 }
 

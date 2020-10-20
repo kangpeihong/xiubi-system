@@ -1,20 +1,11 @@
 <template>
   <el-dialog :append-to-body="true" :close-on-click-modal="false" :before-close="cancel" :visible.sync="dialog" :title="isAdd ? '新增' : '编辑'" width="500px">
     <el-form ref="form" :model="form" :rules="rules" size="small" label-width="80px">
-      <el-form-item label="产品名称" prop="productName">
-        <el-input v-model="form.productName" style="width: 370px;" />
-      </el-form-item>
-
       <div>
         <el-row>
           <el-col :span="12">
-            <el-form-item label="单位名称">
-              <el-select v-model="form.productUnits" placeholder="请选择单位">
-                <el-option label="个" value="个" />
-                <el-option label="张" value="张" />
-                <el-option label="件" value="件" />
-                <el-option label="本" value="本" />
-              </el-select>
+            <el-form-item label="员工姓名" prop="productName">
+              <el-input v-model="form.name" />
             </el-form-item>
           </el-col>
           <el-col :span="11">
@@ -25,7 +16,15 @@
         </el-row>
       </div>
 
-      <el-form-item label="产品图片">
+      <el-form-item label="员工电话">
+        <el-input v-model="form.phone" placeholder="请输入数字" style="width: 370px;" />
+      </el-form-item>
+
+      <el-form-item label="职位介绍">
+        <el-input :rows="3" v-model="form.jobs" type="textarea" style="width: 370px;" />
+      </el-form-item>
+
+      <el-form-item label="员工头像">
         <el-upload
           ref="upload"
           :auto-upload="false"
@@ -34,7 +33,7 @@
           :headers="headers"
           :before-remove="beforeRemove"
           :on-preview="handlePreview"
-          :action="xwProductfileUploadApi"
+          :action="xwEmployeesFileUploadApi"
           :show-file-list="true"
           :on-remove="onRemove"
           :http-request="httpRequest"
@@ -44,40 +43,12 @@
           list-type="picture"
         >
           <div class="eladmin-upload">
-            <i class="el-icon-upload">添加文件</i>
+            <i class="el-icon-upload">添加头像</i>
           </div>
 
           <div slot="tip" class="el-upload__tip">只能上传jpg/png/gif文件，且至少上传1张,大小不超过1M</div>
         </el-upload>
       </el-form-item>
-      <el-form-item label="产品描述">
-        <el-input :rows="3" v-model="form.productDesc" type="textarea" style="width: 370px;" />
-      </el-form-item>
-
-      <div v-for="(item, index) in form.productPrices" :key="index">
-        <el-row>
-          <el-col :span="8">
-            <el-form-item label="起印章数">
-              <el-input v-model="item.productNumber" placeholder="起印章数" style="width: 100px;" />
-            </el-form-item>
-          </el-col>
-          <el-col :span="8">
-            <el-form-item label="单价">
-              <el-input v-model="item.price" placeholder="单价" style="width: 100px;" />
-            </el-form-item>
-          </el-col>
-          <el-col :span="8">
-            <el-form-item>
-              <div v-if="index === 0">
-                <el-button type="primary" icon="el-icon-plus" @click="addItem" />
-              </div>
-              <div v-if="index > 0">
-                <el-button type="primary" icon="el-icon-delete" @click="delItem(item, index)" />
-              </div>
-            </el-form-item>
-          </el-col>
-        </el-row>
-      </div>
     </el-form>
     <div slot="footer" class="dialog-footer">
       <el-button type="text" @click="cancel">取消</el-button>
@@ -88,7 +59,7 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import { add, edit, removeImage } from '@/api/xwProduct'
+import { add, edit, removeImage } from '@/api/xwEmployees'
 import { getToken } from '@/utils/auth'
 import axios from 'axios'
 export default {
@@ -108,30 +79,23 @@ export default {
       headers: { Authorization: 'Bearer ' + getToken() },
       index: 0,
       form: {
-        productId: '',
-        productName: '',
-        productUnits: '',
-        productDesc: '',
-        bigFileName: '',
-        bigFilePath: '',
+        id: '',
+        name: '',
+        phone: '',
+        jobs: '',
+        headName: '',
+        headAddress: '',
         sort: '',
-        productPrices: [
-          {
-            productNumber: '',
-            price: '',
-          },
-        ],
       },
       rules: {
-        productName: [
-          { required: true, trigger: 'change', message: '产品名称不能为空' },
+        name: [
+          { required: true, trigger: 'change', message: '员工姓名不能为空' },
         ],
       },
     }
   },
-
   computed: {
-    ...mapGetters(['xwProductfileUploadApi']),
+    ...mapGetters(['xwEmployeesFileUploadApi']),
   },
   methods: {
     // 关闭窗口
@@ -188,10 +152,10 @@ export default {
           },
         }
         axios
-          .post(this.xwProductfileUploadApi, formData, config)
+          .post(this.xwEmployeesFileUploadApi, formData, config)
           .then((rep) => {
-            this.form.bigFilePath = rep.data
-            this.form.bigFileName = this.file.name
+            this.form.headAddress = rep.data
+            this.form.headName = this.file.name
             this.loading = true
             if (this.isAdd) {
               this.doAdd()
@@ -239,33 +203,16 @@ export default {
           this.loading = false
         })
     },
-    addItem() {
-      this.form.productPrices.push({
-        productNumber: '',
-        price: '',
-      })
-    },
-
-    delItem(item, index) {
-      this.form.productPrices.splice(index, 1)
-    },
 
     resetForm() {
       this.dialog = false
       this.$refs['form'].resetFields()
       this.form = {
-        productId: '',
-        productName: '',
-        productUnits: '',
-        productPic: '',
-        productDesc: '',
+        id: '',
+        name: '',
+        phone: '',
+        jobs: '',
         sort: '',
-        productPrices: [
-          {
-            productNumber: '',
-            price: '',
-          },
-        ],
       }
     },
   },
