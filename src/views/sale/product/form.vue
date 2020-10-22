@@ -14,6 +14,7 @@
                 <el-option label="张" value="张" />
                 <el-option label="件" value="件" />
                 <el-option label="本" value="本" />
+                <el-option label="套" value="套" />
               </el-select>
             </el-form-item>
           </el-col>
