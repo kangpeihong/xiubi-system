@@ -11,6 +11,7 @@
       active-text-color="#409EFF"
     >
       <Logo :is-collapse="isCollapse"/>
+      <!-- 菜单 -->
       <sidebar-item v-for="route in permission_routers" :key="route.path" :item="route" :base-path="route.path"/>
     </el-menu>
   </el-scrollbar>
@@ -22,6 +23,9 @@ import SidebarItem from './SidebarItem'
 import Logo from './Logo'
 export default {
   components: { SidebarItem, Logo },
+  mounted(){
+    console.log('ddd',this.permission_routers)
+  },
   computed: {
     ...mapGetters([
       'permission_routers',

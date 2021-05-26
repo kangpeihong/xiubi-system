@@ -116,6 +116,7 @@ export default {
         bigFileName: '',
         bigFilePath: '',
         sort: '',
+        state: '0',
         productPrices: [
           {
             productNumber: '',
@@ -261,6 +262,7 @@ export default {
         productPic: '',
         productDesc: '',
         sort: '',
+        state: '',
         productPrices: [
           {
             productNumber: '',

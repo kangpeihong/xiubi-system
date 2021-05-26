@@ -1,9 +1,9 @@
-import { initData } from '@/api/data'
+import { initData ,initDatas} from '@/api/data'
 
 export default {
   data() {
     return {
-      loading: true, data: [], page: 0, size: 10, total: 0, url: '', params: {}, query: {}, time: 50, isAdd: false, downloadLoading: false
+      loading: true, data: [], page: 0, size: 10, total: 0, url: '', params: {}, query: {}, time: 50, isAdd: false, downloadLoading: false, methods: '',dataStructure:''
     }
   },
   methods: {
@@ -13,17 +13,57 @@ export default {
       }
       return new Promise((resolve, reject) => {
         this.loading = true
-        initData(this.url, this.params).then(res => {
-          this.total = res.totalElements
-          this.data = res.content
-          setTimeout(() => {
+        if (this.methods == 'post') {
+          initDatas(this.url, this.params).then(res => {
+            this.total = res.totalElements
+            this.data = res.content
+            console.log('sososos', res.content)
+
+              
+            // if (this.dataStructure == 'children') {
+            //   let arr = res.content;
+            //   arr.forEach((element,index) => {
+            //     console.log('element', element, index)
+            //     element.children = [],
+                
+            //     element.children[index] = element.enterpriseAddresses[index]
+           
+                
+
+            //   });
+
+            //   this.data=arr
+            //   console.log('arr',arr)
+              
+
+
+
+            // }
+            setTimeout(() => {
+              this.loading = false
+            }, this.time)
+            resolve(res)
+          }).catch(err => {
             this.loading = false
-          }, this.time)
-          resolve(res)
-        }).catch(err => {
-          this.loading = false
-          reject(err)
-        })
+            reject(err)
+          })
+
+        } else {
+          initData(this.url, this.params).then(res => {
+            this.total = res.totalElements
+            this.data = res.content
+          
+            console.log('sososos', res.content)
+            setTimeout(() => {
+              this.loading = false
+            }, this.time)
+            resolve(res)
+          }).catch(err => {
+            this.loading = false
+            reject(err)
+          })
+        }
+
       })
     },
     beforeInit() {

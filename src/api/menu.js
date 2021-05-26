@@ -46,3 +46,5 @@ export function downloadMenu(params) {
     responseType: 'blob'
   })
 }
+
+

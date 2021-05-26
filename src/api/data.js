@@ -7,3 +7,11 @@ export function initData(url, params) {
     params
   })
 }
+
+export function initDatas(url, data) {
+  return request({
+    url: url,
+    method: 'post',
+    data
+  })
+}

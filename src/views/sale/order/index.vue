@@ -32,20 +32,21 @@
     <!--表单组件-->
     <eForm ref="form" :is-add="isAdd" />
     <!--表格渲染-->
+    <!-- {{data}} -->
     <el-table v-loading="loading" :data="data" size="small" style="width: 100%;">
       <el-table-column prop="orderNumber" label="订单编号" />
-      <el-table-column prop="orderState" label="订单状态">
+      <!-- <el-table-column prop="orderState" label="订单状态">
         <template slot-scope="scope">
           <el-tag :type="scope.row.orderState ? 'success' : 'warning'">{{ scope.row.orderState ? '已发货' : '未发货' }}</el-tag>
         </template>
-      </el-table-column>
+      </el-table-column> -->
 
-      <el-table-column prop="paymentStatus" label="付款状态">
+      <!-- <el-table-column prop="paymentStatus" label="付款状态">
         <template slot-scope="scope">
           <el-tag :type="scope.row.paymentStatus ? 'success' : 'warning'">{{ scope.row.paymentStatus ? '已付款' : '未付款' }}</el-tag>
         </template>
-      </el-table-column>
-      <el-table-column prop="orderMmount" label="订单总金额" />
+      </el-table-column> -->
+      <el-table-column prop="orderAmount" label="订单总金额" />
       <el-table-column prop="createTime" label="订单创建日期">
         <template slot-scope="scope">
           <span>{{ parseTime(scope.row.createTime) }}</span>
@@ -57,16 +58,16 @@
         </template>
       </el-table-column>
       <el-table-column :show-overflow-tooltip="true" prop="describes" label="描述" />
-      <el-table-column :show-overflow-tooltip="true" prop="enterpriseName" label="客户名称">
-        <template slot-scope="scope">
-          <span>{{ scope.row.xwEnterprise.enterpriseName }}</span>
+      <el-table-column :show-overflow-tooltip="true" prop="userName" label="客户名称">
+        <template slot-scope="scope" >
+          <span v-if="scope.row.enterpriseUser">{{ scope.row.enterpriseUser.userName }}</span>
         </template>
       </el-table-column>
-      <el-table-column prop="consignee" label="客户操作员">
+      <!-- <el-table-column prop="consignee" label="客户操作员">
         <template slot-scope="scope">
           <span>{{ scope.row.xwEnterprise.consignee }}</span>
         </template>
-      </el-table-column>
+      </el-table-column> -->
       <el-table-column v-if="checkPermission(['admin','xwOrder:edit','xwOrder:del'])" label="操作" width="180px" align="center" fixed="right">
         <template slot-scope="scope">
           <el-button v-permission="['admin','timing:edit']" size="mini" style="margin-right: 3px;" type="text" @click="selDetail(scope.row.id)">查看</el-button>
@@ -154,6 +155,7 @@ export default {
           this.delLoading = false
           const _this = this.$refs.form
           _this.tableData = res
+          console.log('wojiushi res',res)
           _this.dialog = true
         })
         .catch((err) => {

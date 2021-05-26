@@ -159,6 +159,7 @@ export default {
         productUnits: data.productUnits,
         productDesc: data.productDesc,
         productPrices: data.productPrices,
+        state: data.state,
         sort: data.sort,
       }
       _this.dialog = true

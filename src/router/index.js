@@ -59,6 +59,7 @@ router.beforeEach((to, from, next) => {
 
 export const loadMenus = (next, to) => {
   buildMenus().then(res => {
+    console.log('sdfasd',res)
     const asyncRouter = filterAsyncRouter(res)
     asyncRouter.push({ path: '*', redirect: '/404', hidden: true })
     store.dispatch('GenerateRoutes', asyncRouter).then(() => {
